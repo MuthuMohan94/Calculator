@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 public class ButtonHandler implements ActionListener {
 	
 	private String expr;
-	public BigDecimal prevAns;
+	public static BigDecimal prevAns;
 	
 	JTextField inputTextfield;
 	JTextField outputTextfield;
@@ -88,6 +88,10 @@ public class ButtonHandler implements ActionListener {
 		this.xField = xRangeField;
 		this.yField = yRangeField;
 		this.graphDisplayPanel = graphDisplayPanel;
+	}
+	
+	public static BigDecimal getPrevAns() {
+		return prevAns;	
 	}
 
 	@Override
@@ -166,7 +170,7 @@ public class ButtonHandler implements ActionListener {
 			g.clearRect(0, 0, 600, 600);
 			int x = Integer.valueOf(this.xField.getText());
 			int y = Integer.valueOf(this.yField.getText());
-			drawGrid(g, x,y);
+			drawGrid(g,x,y);
 			inputTextfield.setText("");
             outputTextfield.setText("");
         }
@@ -177,17 +181,13 @@ public class ButtonHandler implements ActionListener {
 				int j;
 				int k;
 				g.setColor(Color.gray);
-				for(int i=0;i<600/ySize;i++) {
-					j=i*ySize;
-					k=i*xSize;
-					g.drawLine(j, 0, j, 600);
-					g.drawLine(0,k,600,k);
+				for(int i=0;i<300/ySize;i++) {
+					
 				}
 				
 				// Vertical Line
 				g.setColor(Color.RED);
 				g.drawLine(300, 0, 300, 600);
-				
 				
 				// Horizontal Line
 				g.drawLine(0,300, 600, 300);

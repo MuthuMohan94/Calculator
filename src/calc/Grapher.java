@@ -32,8 +32,8 @@ public class Grapher extends JPanel {
 		
 		// Horizontal Line
 		g.drawLine(0,300, 600, 300);
-		g.drawString("X Axis", 1, 299);
-		g.drawString("Y Axis", 301, 10);
+		//g.drawString("X Axis", 1, 299);
+		//g.drawString("Y Axis", 301, 10);
 		g.drawOval(300, 300, 1, 1);
 	}
 	

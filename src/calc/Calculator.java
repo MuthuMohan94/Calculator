@@ -76,8 +76,8 @@ public class Calculator extends JPanel {
 
 	JComboBox colorComboBox = new JComboBox();
 
-	JButton addButton = new JButton("PLOT");
-	JButton delButton = new JButton("ERASE");
+	JButton graphButton = new JButton("PLOT");
+	JButton eraseButton = new JButton("ERASE");
 
 	JTextArea equationBox = new JTextArea();
 	JFrame frame = new JFrame();
@@ -117,7 +117,7 @@ public class Calculator extends JPanel {
 		frame.getContentPane().add(mainCalc, BorderLayout.CENTER);
 		
 		// Creating all handlers
-		HistoryHandler historyHandler = new HistoryHandler(equationBox, loadButton, inputTextfield, addButton, delButton);
+		HistoryHandler historyHandler = new HistoryHandler(equationBox, loadButton, inputTextfield, graphButton, eraseButton, xRangeField, yRangeField, graphDisplayPanel);
 		ColorHandler colorHandler = new ColorHandler(colorComboBox, inputTextfield);
 		ButtonHandler buttonHandler = new ButtonHandler(inputTextfield, outputTextfield, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btnDot, btnClear, 
 				btnPlus, btnCaret, btnSin, btnMinus, btnSqrRoot, btnCos, btnForwardSlash, btne, btnTan, btnAsterisk, btnPi, btnNaturalLog, btnAnswer, btnEnter, btnParaStart, btnParaEnd, 
@@ -126,43 +126,16 @@ public class Calculator extends JPanel {
 		// Creating all Panels
 		createGraphPanel();
 		createButtonArray(buttonHandler);
+		addComponentsToMainPanel();
 		
-		mainCalc.setLayout(null);
-		mainCalc.add(graphPanel);
-		mainCalc.add(colorSelectLabel);
-		mainCalc.add(colorComboBox);
-		mainCalc.add(delButton);
-		mainCalc.add(addButton);
-		mainCalc.add(scrollPane);
-		mainCalc.add(loadButton);
-		mainCalc.add(lblHistory);
-		mainCalc.add(buttonArray);
-		mainCalc.add(answerArray);
-		mainCalc.add(outputPanel);
-		mainCalc.add(inputPanel);
-		answerArray.add(btnParaEnd);
-		answerArray.add(btnParaStart);
-		answerArray.add(btnAnswer);
-		answerArray.add(btnEnter);
-		outputPanel.add(lblOutput);
-		outputPanel.add(outputTextfield);
-		inputPanel.add(lblYfx);
-		inputPanel.add(inputTextfield);
-		inputPanel.add(lblNewLabel);
-		inputPanel.add(lblYAxisRange);
-		inputPanel.add(xRangeField);
-		inputPanel.add(yRangeField);
 		// Creates the graphics to draw the grid on the graph panel
 		g = graphDisplayPanel.getGraphics();
 		
-		addButton.addActionListener(historyHandler);
+		graphButton.addActionListener(historyHandler);
 		loadButton.addActionListener(historyHandler);
-		delButton.addActionListener(historyHandler);
+		eraseButton.addActionListener(historyHandler);
 		
-		btnEnter.addActionListener(buttonHandler);
-		btnAnswer.addActionListener(buttonHandler);
-		btnParaStart.addActionListener(buttonHandler);
-		btnParaEnd.addActionListener(buttonHandler);
+		
 		
 		// Create components for main calc
 		colorSelectLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -170,10 +143,11 @@ public class Calculator extends JPanel {
 		colorComboBox.setBounds(812, 104, 102, 20);
 		colorComboBox.addActionListener(colorHandler);
 		colorComboBox.setModel(new DefaultComboBoxModel(new String[] {"BLACK", "BLUE", "RED", "GREEN"}));
-		delButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		delButton.setBounds(729, 129, 73, 32);
-		addButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		addButton.setBounds(812, 129, 73, 32);
+		
+		eraseButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		eraseButton.setBounds(729, 129, 73, 32);
+		graphButton.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		graphButton.setBounds(812, 129, 73, 32);
 		loadButton.setBounds(637, 331, 123, 27);
 		scrollPane.setBounds(637, 185, 361, 150);
 		scrollPane.setViewportView(equationBox);
@@ -202,57 +176,96 @@ public class Calculator extends JPanel {
 		
 	}
 
+
+	private void addComponentsToMainPanel() {
+		mainCalc.setLayout(null);
+		mainCalc.add(graphPanel);
+		mainCalc.add(colorSelectLabel);
+		mainCalc.add(colorComboBox);
+		mainCalc.add(eraseButton);
+		mainCalc.add(graphButton);
+		mainCalc.add(scrollPane);
+		mainCalc.add(loadButton);
+		mainCalc.add(lblHistory);
+		mainCalc.add(buttonArray);
+		mainCalc.add(answerArray);
+		mainCalc.add(outputPanel);
+		mainCalc.add(inputPanel);
+		answerArray.add(btnParaEnd);
+		answerArray.add(btnParaStart);
+		answerArray.add(btnAnswer);
+		answerArray.add(btnEnter);
+		outputPanel.add(lblOutput);
+		outputPanel.add(outputTextfield);
+		inputPanel.add(lblYfx);
+		inputPanel.add(inputTextfield);
+		inputPanel.add(lblNewLabel);
+		inputPanel.add(lblYAxisRange);
+		inputPanel.add(xRangeField);
+		inputPanel.add(yRangeField);
+	}
+
 	private void createButtonArray(ButtonHandler buttonHandler) {
 		buttonArray.setBounds(637, 412, 361, 138);
 		buttonArray.setLayout(new GridLayout(4, 6, 2, 10));
-		btn9.addActionListener(buttonHandler);
+		
+		
+		// Adding buttons to button panel
 		buttonArray.add(btn9);
-		btn8.addActionListener(buttonHandler);
 		buttonArray.add(btn8);
-		btn7.addActionListener(buttonHandler);
 		buttonArray.add(btn7);
-		btn5.addActionListener(buttonHandler);
-		btnPlus.addActionListener(buttonHandler);
 		buttonArray.add(btnPlus);
-		btnCaret.addActionListener(buttonHandler);
 		buttonArray.add(btnCaret);
-		btnSin.addActionListener(buttonHandler);
 		buttonArray.add(btnSin);
-		btn6.addActionListener(buttonHandler);
 		buttonArray.add(btn6);
 		buttonArray.add(btn5);
-		btn4.addActionListener(buttonHandler);
 		buttonArray.add(btn4);
-		btn2.addActionListener(buttonHandler);
-		btn3.addActionListener(buttonHandler);
-		btnMinus.addActionListener(buttonHandler);
 		buttonArray.add(btnMinus);
-		btnSqrRoot.addActionListener(buttonHandler);
 		buttonArray.add(btnSqrRoot);
-		btnCos.addActionListener(buttonHandler);
 		buttonArray.add(btnCos);
 		buttonArray.add(btn3);
 		buttonArray.add(btn2);
-		btn1.addActionListener(buttonHandler);
 		buttonArray.add(btn1);
-		btnForwardSlash.addActionListener(buttonHandler);
 		buttonArray.add(btnForwardSlash);
-		btne.addActionListener(buttonHandler);
 		buttonArray.add(btne);
-		btnTan.addActionListener(buttonHandler);
 		buttonArray.add(btnTan);
-		btnDot.addActionListener(buttonHandler);
 		buttonArray.add(btnDot);
-		btn0.addActionListener(buttonHandler);
 		buttonArray.add(btn0);
-		btnClear.addActionListener(buttonHandler);
 		buttonArray.add(btnClear);
-		btnAsterisk.addActionListener(buttonHandler);
 		buttonArray.add(btnAsterisk);
-		btnPi.addActionListener(buttonHandler);
 		buttonArray.add(btnPi);
-		btnNaturalLog.addActionListener(buttonHandler);
 		buttonArray.add(btnNaturalLog);
+		
+		// Adding handlers for buttons
+		btn9.addActionListener(buttonHandler);
+		btn8.addActionListener(buttonHandler);
+		btn7.addActionListener(buttonHandler);
+		btn5.addActionListener(buttonHandler);
+		btnPlus.addActionListener(buttonHandler);
+		btnCaret.addActionListener(buttonHandler);
+		btnSin.addActionListener(buttonHandler);
+		btn6.addActionListener(buttonHandler);
+		btn4.addActionListener(buttonHandler);
+		btn2.addActionListener(buttonHandler);
+		btn3.addActionListener(buttonHandler);
+		btnMinus.addActionListener(buttonHandler);
+		btnSqrRoot.addActionListener(buttonHandler);
+		btnCos.addActionListener(buttonHandler);
+		btn1.addActionListener(buttonHandler);
+		btnForwardSlash.addActionListener(buttonHandler);
+		btne.addActionListener(buttonHandler);
+		btnTan.addActionListener(buttonHandler);
+		btnDot.addActionListener(buttonHandler);
+		btn0.addActionListener(buttonHandler);
+		btnClear.addActionListener(buttonHandler);
+		btnAsterisk.addActionListener(buttonHandler);
+		btnPi.addActionListener(buttonHandler);
+		btnNaturalLog.addActionListener(buttonHandler);
+		btnEnter.addActionListener(buttonHandler);
+		btnAnswer.addActionListener(buttonHandler);
+		btnParaStart.addActionListener(buttonHandler);
+		btnParaEnd.addActionListener(buttonHandler);
+		
 		// Setting color for buttons
 		btnTan.setBackground(Color.ORANGE);
 		btnTan.setForeground(Color.WHITE);
@@ -267,7 +280,7 @@ public class Calculator extends JPanel {
 	protected void createGraphPanel() {
 		graphPanel.setLayout(null);
 		graphPanel.setBackground(Color.white);
-		graphPanel.setBounds(10, 11, 600, 600);
+		graphPanel.setBounds(5, 5, 600, 600);
 		graphPanel.setVisible(true);
 		addToGraphPanel();
 	}
